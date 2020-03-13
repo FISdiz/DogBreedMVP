@@ -62,10 +62,8 @@ public class BreedModel implements IModel {
     }
 
     @Override
-    public void loadImages(String raza, String subRaza) {
-        Log.d(TAG, "loadImages metodo no implementado");
+    public void loadImages(String raza) {
         IDogDataBase servicio = RetrofitClient.getRetrofitInstance().create(IDogDataBase.class);
-
 
         Call<RazaImagen> listCall = servicio.listaImagenes(raza);
         List<String> listaFotosPerros = new ArrayList<>();
@@ -75,7 +73,7 @@ public class BreedModel implements IModel {
             public void onResponse(Call<RazaImagen> call, Response<RazaImagen> response) {
                 RazaImagen listaRazas = response.body();
                 List<String> lista = listaRazas.getMessage();
-                
+
                 //Log.i("Valor", ""+listaPerros);
                 iPresenterDetail.loadBreedImages(raza);
             }

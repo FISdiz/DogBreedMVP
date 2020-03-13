@@ -19,7 +19,7 @@ public class PresenterDetail implements IPresenterDetail, IPresenterViewDetail {
 
     @Override
     public void loadBreedImages(String breed) {
-        imodel.loadBreeds();
+        imodel.loadImages(breed);
     }
 
     @Override
@@ -29,6 +29,6 @@ public class PresenterDetail implements IPresenterDetail, IPresenterViewDetail {
 
     @Override
     public void showBreedImages(String breed) {
-
+    iPresenterViewDetail.showBreedImages(breed);
     }
 }
