@@ -16,10 +16,10 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import cl.puntogestion.dogapi.model.BreedModel;
-import cl.puntogestion.dogapi.presenter.Presenter;
+import cl.puntogestion.dogapi.presenter.PresenterList;
 import cl.puntogestion.dogapi.R;
 
-public class ListDogFragment extends Fragment implements Presenter.IPresenterViewList {
+public class ListDogFragment extends Fragment implements PresenterList.IPresenterViewList {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -67,7 +67,7 @@ public class ListDogFragment extends Fragment implements Presenter.IPresenterVie
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            Presenter presentador = new Presenter(this);
+            PresenterList presentador = new PresenterList(this);
             presentador.setImodel(new BreedModel(presentador));
             presentador.loadBreeds();
         }

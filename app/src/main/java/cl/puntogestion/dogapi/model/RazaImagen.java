@@ -1,16 +1,17 @@
 package cl.puntogestion.dogapi.model;
 
+import java.util.List;
 import java.util.Map;
 
 public class RazaImagen {
     private String status;
-    private Map<String,String>message;
+    private List<String> message;
 
     public String getStatus() {
         return status;
     }
 
-    public Map<String, String> getMessage() {
+    public List<String> getMessage() {
         return message;
 
     }
