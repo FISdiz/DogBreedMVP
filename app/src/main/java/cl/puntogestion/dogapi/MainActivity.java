@@ -13,10 +13,11 @@ public class MainActivity extends AppCompatActivity implements ListDogFragment.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportFragmentManager().beginTransaction().add(R.id.mainFrameLayout, ListDogFragment.newInstance(1), "listaPerritos").commit();
     }
 
     @Override
-    public void onListFragmentInteraction(List<String> lista) {
+    public void onListFragmentInteraction(int position) {
 
     }
 }

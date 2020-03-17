@@ -32,18 +32,15 @@ public class DogPhotoRecycleViewAdapter extends RecyclerView.Adapter<DogPhotoRec
     public class ViewHolderImages extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mTextView;
-        public final Image mImage;
+        //public final Image mImage;
 
         public ViewHolderImages(@NonNull View view) {
             super(view);
-            mView = View;
-            mTextView = (TextView)itemView.findViewById(R.id.nombreRazaDetalle);
-            mImage = (Image) itemView.findViewById(R.id.imagenPerrito);
+            mView = view;
+            mTextView = (TextView) itemView.findViewById(R.id.nombreRazaDetalle);
+            //   mImage = (Image) itemView.findViewById(R.id.imagenPerrito);
         }
-    }
-
-
-        }
-
     }
 }
+
+

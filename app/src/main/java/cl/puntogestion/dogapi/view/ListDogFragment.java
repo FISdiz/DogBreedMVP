@@ -28,6 +28,7 @@ public class ListDogFragment extends Fragment implements PresenterList.IPresente
     private OnListFragmentInteractionListener mListener;
 
     RecyclerView recyclerView;
+    MyDogRecyclerViewAdapter myAdaptador;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -95,11 +96,11 @@ public class ListDogFragment extends Fragment implements PresenterList.IPresente
     @Override
     public void notificar(List<String> lista) {
         Log.d("Datos", ""+lista);
-        MyDogRecyclerViewAdapter myAdaptador = new MyDogRecyclerViewAdapter(lista, mListener );
+        myAdaptador = new MyDogRecyclerViewAdapter(lista, mListener );
         recyclerView.setAdapter(myAdaptador);
     }
 
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(List<String> lista);
+        void onListFragmentInteraction(int position);
     }
 }
