@@ -32,18 +32,17 @@ public class MyDogRecyclerViewAdapter extends RecyclerView.Adapter<MyDogRecycler
 
     private static final String TAG = "MyDogRecyclerViewAdapte";
     private final List<String> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private OnItemClickListener mListener;
 
-    public MyDogRecyclerViewAdapter(List<String> items, OnListFragmentInteractionListener listener) {
+    public MyDogRecyclerViewAdapter(List<String> items) {
         mValues = items;
-        mListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_dog, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mListener);
     }
 
     @Override
@@ -56,8 +55,9 @@ public class MyDogRecyclerViewAdapter extends RecyclerView.Adapter<MyDogRecycler
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    mListener.onListFragmentInteraction(position);
+                    mListener.onItemClick(position);
                     Log.d("TAG", String.valueOf(position));
+
                 }
             }
         });
@@ -68,17 +68,32 @@ public class MyDogRecyclerViewAdapter extends RecyclerView.Adapter<MyDogRecycler
         return mValues.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick (int position);
+    }
+
+    public void setOnItemClickListener (OnItemClickListener mListener) {
+
+        this.mListener = mListener;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
         public String mItem;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, OnItemClickListener mListener) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.item_number);
             mContentView = (TextView) view.findViewById(R.id.content);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.onItemClick(getAdapterPosition());
+                }
+            });
         }
 
         @Override

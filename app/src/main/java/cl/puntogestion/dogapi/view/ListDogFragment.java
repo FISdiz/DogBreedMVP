@@ -1,6 +1,7 @@
 package cl.puntogestion.dogapi.view;
 
 import android.content.Context;
+import android.nfc.Tag;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -75,18 +76,6 @@ public class ListDogFragment extends Fragment implements PresenterList.IPresente
         return view;
     }
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -96,8 +85,17 @@ public class ListDogFragment extends Fragment implements PresenterList.IPresente
     @Override
     public void notificar(List<String> lista) {
         Log.d("Datos", ""+lista);
-        myAdaptador = new MyDogRecyclerViewAdapter(lista, mListener );
+        myAdaptador = new MyDogRecyclerViewAdapter(lista);
         recyclerView.setAdapter(myAdaptador);
+        myAdaptador.setOnItemClickListener(new MyDogRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Log.d("TAG", String.valueOf(position));
+                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.mainFrameLayout, DetailDogFragment.newInstance(lista.get(position),""), "details")
+                .remove(getActivity().getSupportFragmentManager().findFragmentByTag("listaPerritos"))
+                .commit();
+            }
+        });
     }
 
     public interface OnListFragmentInteractionListener {
