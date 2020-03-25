@@ -88,6 +88,7 @@ public class ListDogFragment extends Fragment implements PresenterList.IPresente
         myAdaptador = new MyDogRecyclerViewAdapter(lista);
         recyclerView.setAdapter(myAdaptador);
         myAdaptador.setOnItemClickListener(new MyDogRecyclerViewAdapter.OnItemClickListener() {
+
             @Override
             public void onItemClick(int position) {
                 Log.d("TAG", String.valueOf(position));

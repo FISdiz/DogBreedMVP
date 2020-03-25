@@ -62,7 +62,7 @@ public class BreedModel implements IModel {
     }
 
     @Override
-    public void loadImages(String raza) {
+    public void loadImages(String raza, String subRaza) {
         IDogDataBase servicio = RetrofitClient.getRetrofitInstance().create(IDogDataBase.class);
 
         Call<RazaImagen> listCall = servicio.listaImagenes(raza);
@@ -75,7 +75,7 @@ public class BreedModel implements IModel {
                 List<String> lista = listaRazas.getMessage();
 
                 //Log.i("Valor", ""+listaPerros);
-                iPresenterDetail.loadBreedImages(raza);
+                iPresenterModel.notificar(lista);
             }
 
             @Override

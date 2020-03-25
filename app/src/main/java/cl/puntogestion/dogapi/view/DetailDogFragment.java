@@ -1,28 +1,37 @@
 package cl.puntogestion.dogapi.view;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import cl.puntogestion.dogapi.R;
-import cl.puntogestion.dogapi.presenter.IPresenterViewDetail;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DetailDogFragment extends Fragment implements IPresenterViewDetail {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+import cl.puntogestion.dogapi.R;
+import cl.puntogestion.dogapi.model.BreedModel;
+import cl.puntogestion.dogapi.presenter.IPresenterViewDetail;
+import cl.puntogestion.dogapi.presenter.PresenterDetail;
+
+public class DetailDogFragment extends Fragment implements PresenterDetail.IPresenterViewImages, IPresenterViewDetail {
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private String raza;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    RecyclerView recyclerView;
 
     public DetailDogFragment() {
         // Required empty public constructor
@@ -52,6 +61,7 @@ public class DetailDogFragment extends Fragment implements IPresenterViewDetail 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            this.raza = mParam1;
         }
     }
 
@@ -59,7 +69,24 @@ public class DetailDogFragment extends Fragment implements IPresenterViewDetail 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_dog, container, false);
+        View view = inflater.inflate(R.layout.fragment_detail_dog, container, false);
+
+        Context context = view.getContext();
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewDetail);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+
+        //Enlace entre vista y presentador
+        PresenterDetail presentador = new PresenterDetail(this);
+        presentador.setImodel(new BreedModel(presentador));
+        presentador.loadBreedImages(raza);
+
+        return view;
+    }
+
+    @Override
+    public void notificar(List<String> lista) {
+        DogPhotoRecycleViewAdapter myAdaptador = new DogPhotoRecycleViewAdapter(lista);
+        recyclerView.setAdapter(myAdaptador);
     }
 
     @Override
@@ -67,3 +94,4 @@ public class DetailDogFragment extends Fragment implements IPresenterViewDetail 
 
     }
 }
+
